@@ -9,6 +9,8 @@
 | * Verify merkle root        | * generate full proof path for certain record |                | * verify |
 |                                                 | * verify based on data source |                |                    |
 
+View [service api](./witness-service-api.md).
+
 ## Workflow
 
 ### 1. add record
