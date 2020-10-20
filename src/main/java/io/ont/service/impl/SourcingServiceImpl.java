@@ -146,16 +146,21 @@ public class SourcingServiceImpl implements SourcingService {
         }
         for (Object o : (JSONArray) eventByHeight) {
             try {
-                for (Object nObj : (JSONArray) ((Map) o).get("Notify")) {
-                    Map m = (Map) nObj;
-                    if (!configParam.CONTRACT_ADDRESS.equals(m.get("ContractAddress"))) continue;
-                    JSONArray state = (JSONArray) m.get("States");
-                    if (proof.root.toHexString().equals(state.getString(0)) && Integer.toString(proof.size).equals(state.getString(1))) {
-                        String txHash = (String) ((Map) o).get("TxHash");
-                        transactionMap = getHashes(txHash);
-                        break;
-                    }
+                String hash = (String)((Map) o).get("TxHash");
+                if (hash.equals(proof.txHash)) {
+                    transactionMap = getHashes(hash);
+                    break;
                 }
+//                for (Object nObj : (JSONArray) ((Map) o).get("Notify")) {
+//                    Map m = (Map) nObj;
+//                    if (!configParam.CONTRACT_ADDRESS.equals(m.get("ContractAddress"))) continue;
+//                    JSONArray state = (JSONArray) m.get("States");
+//                    if (proof.root.toHexString().equals(state.getString(0)) && Integer.toString(proof.size).equals(state.getString(1))) {
+//                        String txHash = (String) ((Map) o).get("TxHash");
+//                        transactionMap = getHashes(txHash);
+//                        break;
+//                    }
+//                }
             } catch (Exception e) {
             }
         }
