@@ -65,8 +65,8 @@ public class SourcingServiceImpl implements SourcingService {
             UInt256[] ps = new UInt256[proofs.size()];
             proofs.toArray(ps);
             Proof proof = new Proof(new UInt256(Helper.hexToBytes((String) result.get("root"))),
-                    (int) result.get("size"), (int) result.get("blockheight"), (int) result.get("index"), ps
-            );
+                    (int) result.get("size"), (int) result.get("blockheight"), (int) result.get("leafHeight"),(int) result.get("index"),
+                    ps,(String) result.get("txHash"));
             return proof;
         } catch (Exception e) {
             throw new RuntimeException(e);
@@ -128,7 +128,7 @@ public class SourcingServiceImpl implements SourcingService {
             Map<String, Object> rootMap = new HashMap<>();
             rootMap.put("root", proof.root.toHexString());
             rootMap.put("size", proof.size);
-            rootMap.put("blockHeight", proof.blockheight);
+            rootMap.put("blockHeight", proof.leafHeight);
             Map<String, Object> transactionMap = verifyBlock(proof);
             Map<String, Object> map = new HashMap<>();
             map.put("rootMap",rootMap);
@@ -140,7 +140,7 @@ public class SourcingServiceImpl implements SourcingService {
 
     private Map<String, Object> verifyBlock(Proof proof) throws Exception {
         Map<String, Object> transactionMap = new HashMap<>();
-        Object eventByHeight = sdkUtil.getEventByHeight(proof.blockheight);
+        Object eventByHeight = sdkUtil.getEventByHeight(proof.leafHeight);
         if (StringUtils.isEmpty(eventByHeight)) {
             return transactionMap;
         }
