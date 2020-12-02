@@ -11,14 +11,13 @@ import org.springframework.web.bind.annotation.*;
 import java.util.Map;
 
 
-@Api(tags = "Algorithm controller")
+@Api(tags = "Sourcing controller")
 @RestController
 @RequestMapping("/api/v1/witness")
 @CrossOrigin
 public class SourcingController {
     @Autowired
     private SourcingService sourcingService;
-
 
     @ApiOperation(value = "souring record", notes = "sourcing record", httpMethod = "POST")
     @GetMapping("/proof/{hash}")
